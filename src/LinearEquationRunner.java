@@ -21,5 +21,6 @@ public class LinearEquationRunner {
         int y2 = Integer.parseInt(coordinate2.substring(coordinate2.indexOf(" ") + 1));
 
         LinearEquation le = new LinearEquation(x1, x2, y1, y2);
+        System.out.println(LinearEquation.lineInfo());
     }
 }
