@@ -12,15 +12,15 @@ public class LinearEquation {
     }
 
     public double distance() {
-        return (roundedToHundredth(Math.sqrt((y2 - y1) * (y2 - y1) + (x2 - x1) * (x2 - x1))));
+        return Math.sqrt((roundedToHundredth(y2 - y1) * roundedToHundredth((y2 - y1))) + (roundedToHundredth(x2 - x1) * (roundedToHundredth(x2 - x1))));
     }
 
     public double yIntercept() {
-        return (roundedToHundredth(slope() * 0 + y1));
+        return slope() * 0 + y1;
     }
 
     public double slope() {
-        return (roundedToHundredth(y2 - y1) / (x2 - x1))gg;
+        return ((roundedToHundredth(y2 - y1)) / (roundedToHundredth(x2 - x1)));
     }
 
     public String equation() {
@@ -28,7 +28,7 @@ public class LinearEquation {
     }
 
     public String coordinateForX(double xValue) {
-        return (Double.toString((roundedToHundredth(((xValue * slope() + yIntercept()))))));
+        return "(" + roundedToHundredth(xValue) + ", " + (roundedToHundredth(((xValue * slope() + yIntercept())))) + ")";
     }
 
     public double roundedToHundredth(double toRound) {

@@ -20,7 +20,10 @@ public class LinearEquationRunner {
         int x2 = Integer.parseInt(coordinate2.substring(0, coordinate2.indexOf(" ")));
         int y2 = Integer.parseInt(coordinate2.substring(coordinate2.indexOf(" ") + 1));
 
-        LinearEquation le = new LinearEquation(x1, x2, y1, y2);
-        System.out.println(LinearEquation.lineInfo());
+        LinearEquation rc = new LinearEquation(x1, x2, y1, y2);
+        System.out.println(rc.lineInfo());
+        System.out.println("Enter a value for x: ");
+        Double xCoordinate = scan.nextDouble();
+        System.out.println(rc.coordinateForX(xCoordinate));
     }
 }
