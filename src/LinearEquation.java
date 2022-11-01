@@ -16,7 +16,7 @@ public class LinearEquation {
     }
 
     public double yIntercept() {
-        return slope() * 0 + y1;
+        return slope() * x1 - y1;
     }
 
     public double slope() {
