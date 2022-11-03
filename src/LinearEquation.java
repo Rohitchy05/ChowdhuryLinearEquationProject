@@ -1,3 +1,4 @@
+import java.util.*;
 public class LinearEquation {
     private int x1;
     private int x2;
@@ -24,25 +25,24 @@ public class LinearEquation {
     }
 
     public String equation() {
-        double numerator = slope();
-        int denominator = 1;
-        numerator *= 100;
-        denominator *= 100;
-        for (int i = 1; i <= numerator && i <= denominator; i++) {
-            if (numerator % i == 0 && denominator % i == 0)
-                numerator /= i;
-                denominator /= i;
+        String wholeNum = Double.toString(Math.abs(slope()));
+        int integerNum = wholeNum.indexOf('.');
+        int decimalNum = wholeNum.length() - integerNum - 1;
+        if (wholeNum.length() == 3 && wholeNum.charAt(wholeNum.length() - 1) == 0) {
+            decimalNum = 0;
+        } else {
+            double converted_slope = slope() * Math.pow(10, decimalNum);
+            int divisor = GCD((int) converted_slope, (int) Math.pow(10, decimalNum));
+            return "y =  " + converted_slope / divisor + "/" + ((Math.pow(10, decimalNum)) / divisor) + "x +  " + yIntercept();
         }
-        //String s = String.valueOf(slope());
-        //int decimalDigit = s.length() - 1 - s.indexOf('.');
-        //int denominator = 1;
-        //for (int i = 0; i < decimalDigit; i++) {
-            //double slope = slope();
-            //slope *= 10;
-            //denominator *= 10;
-        //}
-        //int numerator = (int) Math.round(slope());
-        return "y =  " + numerator + "/" + (int) denominator + "x +  " + yIntercept();
+    }
+
+    public static int GCD(int numer, int denom) {
+        if (denom == 0) {
+            return numer;
+        } else {
+            return GCD(denom, numer % denom);
+        }
     }
 
     public String coordinateForX(double xValue) {
