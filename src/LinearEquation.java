@@ -17,34 +17,62 @@ public class LinearEquation {
     }
 
     public double yIntercept() {
-        return y1 - slope() * x1;
+        return roundedToHundredth((y1 - slope() * x1));
     }
 
     public double slope() {
-        return ((roundedToHundredth(y2 - y1)) / (roundedToHundredth(x2 - x1)));
+        if (x2 - x1 != 0)
+            return roundedToHundredth(((roundedToHundredth(y2 - y1)) / (roundedToHundredth(x2 - x1))));
+        return 0;
     }
 
     public String equation() {
-        String wholeNum = Double.toString(Math.abs(slope()));
-        int integerNum = wholeNum.indexOf('.');
-        int decimalNum = wholeNum.length() - integerNum - 1;
-        if (wholeNum.length() == 3 && wholeNum.charAt(wholeNum.length() - 1) == 0) {
-            decimalNum = 0;
+        String slope = "";
+        String yInt;
+        int differenceOfX = x2 - x1;
+        int differenceOfY = y2 - y1;
+        if (slope() * 10 % 10 == 0) {
+            if (slope() == 1.0) {
+                slope += "";
+            } else if(slope() == -1.0) {
+                slope += "-";
+            } else {
+                slope += (int) (slope());
+            }
         } else {
-            double converted_slope = slope() * Math.pow(10, decimalNum);
-            int divisor = GCD((int) converted_slope, (int) Math.pow(10, decimalNum));
-            return "y =  " + converted_slope / divisor + "/" + ((Math.pow(10, decimalNum)) / divisor) + "x +  " + yIntercept();
+            if (differenceOfX > 0 && differenceOfY > 0) {
+                slope += differenceOfY + "/" + differenceOfX;
+            } else if (differenceOfX < 0 && differenceOfY > 0) {
+                slope += "-" + differenceOfY + "/" + Math.abs(differenceOfX);
+            } else if (differenceOfX > 0 && differenceOfY < 0) {
+                slope += differenceOfY + "/" + differenceOfX;
+            } else if (differenceOfX < 0 && differenceOfY < 0) {
+                slope += Math.abs(differenceOfY) + "/" + Math.abs(differenceOfX);
+            } else {
+                return "";
+            }
+        }
+        if (yIntercept() > 0) {
+            yInt = "+ " + Math.abs(yIntercept());
+        } else if (yIntercept() < 0) {
+            yInt = "- " + Math.abs(yIntercept());
+        } else {
+            yInt = "";
+        }
+        if (slope() == 0 || slope() == Integer.MAX_VALUE || slope() == Integer.MIN_VALUE) {
+            if (yInt == "") {
+                return "y = 0";
+            } else {
+                if (yIntercept() * 10 % 10 == 0) {
+                    return "y = " + (int) (yIntercept());
+                } else {
+                    return "y = " + yIntercept();
+                }
+            }
+        } else {
+            return "y = " + slope + "x " + yInt;
         }
     }
-
-    public static int GCD(int numer, int denom) {
-        if (denom == 0) {
-            return numer;
-        } else {
-            return GCD(denom, numer % denom);
-        }
-    }
-
     public String coordinateForX(double xValue) {
         return "(" + roundedToHundredth(xValue) + ", " + (roundedToHundredth(((xValue * slope() + yIntercept())))) + ")";
     }
